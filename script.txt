@@ -1,0 +1,22 @@
+info
+show
+add
+Valerik
+-30
+12
+1200
+CHEAP
+LOFFF
+300
+LOFT
+show
+update 2
+Valerik
+-30
+12
+1200
+CHEAP
+LOFFF
+300
+LOFT
+show
