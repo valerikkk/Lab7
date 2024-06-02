@@ -93,15 +93,6 @@ public class CollectionManager {
         this.tickets = newColl;
         lastId = getNewId();
     }
-    @Override
-    public String toString() {
-        StringBuilder s = new StringBuilder();
-        for (Ticket tic : tickets) {
-            s.append(tic.fileToString()).append("\n");
-        }
-        return s.toString();
-    }
-
     /**
      * Get last generate id.
      *

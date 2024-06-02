@@ -29,29 +29,41 @@ public class Venue {
         this.id = id;    }
 
     public void setName(String name) {
-        if (name == null || name.isEmpty()){
-            throw new NullValueException();
-        }
-        else {
-            this.name = name;
+        try{
+            if (name == null || name.trim().isEmpty()){
+                throw new NullValueException();
+            }
+            else {
+                this.name = name;
+            }
+        }catch (NullValueException e){
+            System.out.println(e.getMessage());
         }
     }
 
     public void setCapacity(Integer capacity) {
-        if (capacity == null || capacity == 0){
-            throw new NullValueException();
-        }
-        else {
-            this.capacity = capacity;
+        try{
+            if (capacity == null || capacity == 0){
+                throw new NullValueException();
+            }
+            else {
+                this.capacity = capacity;
+            }
+        }catch (NullValueException e){
+            System.out.println(e.getMessage());
         }
     }
 
     public void setType(VenueType type) {
-        if (type == null){
-            throw new NullValueException();
-        }
-        else {
-            this.type = type;
+        try{
+            if (type == null){
+                throw new NullValueException();
+            }
+            else {
+                this.type = type;
+            }
+        }catch (NullValueException e){
+            System.out.println(e.getMessage());
         }
     }
 

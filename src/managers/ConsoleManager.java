@@ -32,6 +32,8 @@ public class ConsoleManager {
      * Run from the console to convert a string entered by the user.
      */
     public void runFromConsole() {
+        Authorization authorization = new Authorization();
+        authorization.login();
         String income;
         try {
             AllManagers.getManagers().getCommandManager().callCommand("help");

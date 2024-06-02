@@ -26,10 +26,6 @@ public class AllManagers {
      */
     ConsoleManager consoleManager;
     /**
-     * The Csv parser.
-     */
-    CSVparser csvParser;
-    /**
      * The File writer.
      */
     /**

@@ -3,6 +3,7 @@ package managers;
 import models.TicketData;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -12,45 +13,39 @@ public class DBWriter {
     public TicketData addDB(){
         try{
             TicketData ticketData = dataCollector.wrap();
-            System.out.println("Здесь всё кайф");
-            Connection connection = null;
-            try{
-                connection = dbConnector.connect();
-            }
-            catch (NullPointerException E){
-                E.printStackTrace();
-                System.out.println(E.getLocalizedMessage());
-                System.out.println(E.getMessage());
-            }
-            if(connection.isClosed()){
-                System.out.println("true!!!!");
-            }
+            Connection connection= dbConnector.connect();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO public.\"TICKET\" (\"TNAME\", \"T_X\", \"T_Y\", \"PRICE\", \"TYPE\", \"CREATIONDATE\") VALUES ('"+ ticketData.getName() + "','"+ticketData.getCoordinates().getX() +"','"+ticketData.getCoordinates().getY() +"','"+ticketData.getPrice()+"','"+ticketData.getType() +"','"+ticketData.getCreationDate()+"'); \n INSERT INTO public.\"VENUE\" (\"NAME\", \"CAPACITY\", \"TYPE\") VALUES('" + ticketData.getVenue().getName() + "','" + ticketData.getVenue().getCapacity() +"','"+ ticketData.getVenue().getType()+ "')");
-            System.out.println("Здесь всё норм");
+            statement.executeUpdate("INSERT INTO s409403.\"TICKET\" (\"TNAME\", \"T_X\", \"T_Y\", \"PRICE\", \"TYPE\", \"CREATIONDATE\", \"USERNAME\") VALUES ('"+ ticketData.getName() + "',"+ticketData.getCoordinates().getX() +", "+ticketData.getCoordinates().getY() +","+ticketData.getPrice()+",'"+ticketData.getType() +"','"+ticketData.getCreationDate()+"', '" + Authorization.username + "'); \n INSERT INTO s409403.\"VENUE\" (\"NAME\", \"CAPACITY\", \"TYPE\") VALUES('" + ticketData.getVenue().getName() + "'," + ticketData.getVenue().getCapacity() +",'"+ ticketData.getVenue().getType()+ "')");
+            ticketData.setUsername(Authorization.username);
             return ticketData;
         } catch (SQLException e) {
-            System.out.println("Запрос не выполнен");
+            e.printStackTrace();
         }
-        System.out.println("Здесь всё имба");
         return null;
     }
     public TicketData updateDB(long id) {
-        TicketData ticketData = dataCollector.wrap();
         try {
             Connection connection = dbConnector.connect();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE public.\"TICKET\" \n SET \"TNAME\" = '" + ticketData.getName() + "', \"T_X\" = " + ticketData.getCoordinates().getX()+ ", \"T_Y\"= " + ticketData.getCoordinates().getY()+ ", \"PRICE\" = " + ticketData.getPrice() + ", \"TYPE\" = '" + ticketData.getType()+ "', \"CREATIONDATE\" = '" + ticketData.getCreationDate() + "' WHERE \"ID\" = " + id+ "; \n  UPDATE public.\"VENUE\" \n SET \"NAME\" = '" + ticketData.getVenue().getName() + "', \"CAPACITY\" = " + ticketData.getVenue().getCapacity() + ", \"TYPE\" = '" + ticketData.getVenue().getType()+ "' WHERE \"ID\" = " + id);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM s409403.\"TICKET\" WHERE \"ID\" = " +id+" AND \"USERNAME\" = '" + Authorization.username +"'");
+            if(resultSet.next()){
+                TicketData ticketData = dataCollector.wrap();
+                statement.executeUpdate("UPDATE s409403.\"TICKET\" \n SET \"TNAME\" = '" + ticketData.getName() + "', \"T_X\" = " + ticketData.getCoordinates().getX()+ ", \"T_Y\"= " + ticketData.getCoordinates().getY()+ ", \"PRICE\" = " + ticketData.getPrice() + ", \"TYPE\" = '" + ticketData.getType()+ "', \"CREATIONDATE\" = '" + ticketData.getCreationDate() + "', \"USERNAME\" = '"+ Authorization.username +"' WHERE \"ID\" = " + id+ "; \n  UPDATE s409403.\"VENUE\" \n SET \"NAME\" = '" + ticketData.getVenue().getName() + "', \"CAPACITY\" = " + ticketData.getVenue().getCapacity() + ", \"TYPE\" = '" + ticketData.getVenue().getType()+ "' WHERE \"ID\" = " + id);
+                ticketData.setUsername(Authorization.username);
+                return ticketData;
+            }else {
+                System.out.println("У вас нет доступа к этой ячейке");
+            }
         } catch (SQLException e) {
             System.out.println("Запрос не выполнен");
         }
-        return ticketData;
+        return null;
     }
     public void clearDB(){
         try{
             Connection connection = dbConnector.connect();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM public.\"TICKET\"; \n DELETE FROM public\"VENUE\"");
+            statement.executeUpdate("DELETE FROM s409403.\"TICKET\" WHERE \"USERNAME\" = '"+Authorization.username+"'; \n DELETE FROM s409403.\"VENUE\"");
         } catch (SQLException e) {
             System.out.println("Запрос не выполнен");
         }
@@ -59,7 +54,12 @@ public class DBWriter {
         try{
             Connection connection = dbConnector.connect();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM public.\"TICKET\" where \"ID\" = " + id);
+            ResultSet resultSet = statement.executeQuery("SELECT* FROM s409403.\"TICKET\" WHERE \"ID\" = " +id+" AND \"USERNAME\" = '" + Authorization.username +"'");
+            if(resultSet.next()){
+                statement.executeUpdate("DELETE FROM s409403.\"TICKET\" where \"ID\" = " + id + "; \n DELETE FROM s409403.\"VENUE\" where \"ID\" =" + id);
+            }else {
+                System.out.println("У вас нет доступа к этой ячейке");
+            }
         } catch (SQLException e) {
             System.out.println("Запрос не выполнен");
         }

@@ -7,7 +7,6 @@ public class ConsoleApp {
         AllManagers all = AllManagers.createAllManagers();
         all.setCollectionManager(new CollectionManager());
         all.setScanner(new Scanner(System.in));
-        DBConnector connector = new DBConnector();
         HistoryCommand historyCommand = new HistoryCommand();
         DBWriter dbWriter = new DBWriter();
         DBParser dbParser= new DBParser();

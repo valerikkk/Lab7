@@ -12,6 +12,7 @@ public class TicketData {
     private float price;
     private TicketType type;
     private Venue venue;
+    private String username;
 
     public Coordinates getCoordinates() {
         return coordinates;
@@ -38,54 +39,88 @@ public class TicketData {
     }
 
     public void setName(String name) {
-        if (name == null || name.isEmpty()){
-            throw new NullValueException();
-        }
-        else {
-            this.name = name;
+        try{
+            if (name == null || name.trim().isEmpty()){
+                throw new NullValueException();
+            }
+            else {
+                this.name = name;
+            }
+        }catch (NullValueException e){
+            System.out.println(e.getMessage());
         }
     }
     public void setCoordinates(Coordinates coordinates) {
-        if (coordinates == null){
-            throw new NullValueException();
-        }
-        else{
-            this.coordinates = coordinates;
+        try{
+            if (coordinates == null){
+                throw new NullValueException();
+            }
+            else{
+                this.coordinates = coordinates;
+            }
+        }catch (NullValueException e){
+            System.out.println(e.getMessage());
         }
     }
     public void setCreationDate(LocalDateTime creationDate) {
-        if(creationDate == null){
-            throw new NullValueException();
+        try{
+            if(creationDate == null){
+                throw new NullValueException();
+            }else{
+                this.creationDate = creationDate;
+            }
+        }catch (NullValueException e){
+            System.out.println(e.getMessage());
         }
-        this.creationDate = creationDate;
     }
 
     public void setPrice(float price) {
-        if (price <= 0.0){
-            throw new NullValueException();
-        }
-        else {
-            this.price = price;
+        try{
+            if (price <= 0.0){
+                throw new NullValueException();
+            }
+            else {
+                this.price = price;
+            }
+        }catch (NullValueException e){
+            System.out.println(e.getMessage());
         }
     }
 
     public void setType(TicketType type) {
-        if (type == null){
-            throw new NullValueException();
-        }
-        else {
-            this.type = type;
+        try{
+            if (type == null){
+                throw new NullValueException();
+            }
+            else {
+                this.type = type;
+            }
+        }catch (NullValueException e){
+            System.out.println(e.getMessage());
         }
     }
 
     public void setVenue(Venue venue) {
-        if (venue == null){
-            throw new NullValueException();
-        }
-        else {
-            this.venue = venue;
+        try{
+            if (venue == null){
+                throw new NullValueException();
+            }
+            else {
+                this.venue = venue;
+            }
+        }catch (NullValueException e){
+            System.out.println(e.getMessage());
         }
     }
+
+    public String getUsername() {
+        return username.toUpperCase();
+    }
+
+    public void setUsername(String username) {
+        this.username = username.toUpperCase();
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(name, coordinates, creationDate, price, type);

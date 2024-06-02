@@ -11,6 +11,7 @@ import java.util.Objects;
     private float price; //Значение поля должно быть больше 0
     private TicketType type; //Поле не может быть null
     private Venue venue; //Поле не может быть null
+        private String username;
     public Ticket(Long id, TicketData ticketData) {
         this.id = id;
         this.name = ticketData.getName();
@@ -19,6 +20,7 @@ import java.util.Objects;
         this.price = ticketData.getPrice();
         this.type = ticketData.getType();
         this.venue = ticketData.getVenue();
+        this.username = ticketData.getUsername();
     }
     public Long getId() {
         return id;
@@ -33,20 +35,22 @@ import java.util.Objects;
         public void setId(Long id) {
             this.id = id;
         }
-        @Override
-    public String toString() {
-        return "Ticket{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", coordinates=" + coordinates +
-                ", creationDate=" + creationDate +
-                ", price=" + price +
-                ", type=" + type +
-                ", venue=" + venue +
-                '}';
-    }
 
-    @Override
+        @Override
+        public String toString() {
+            return "Ticket{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", coordinates=" + coordinates +
+                    ", creationDate=" + creationDate +
+                    ", price=" + price +
+                    ", type=" + type +
+                    ", venue=" + venue +
+                    ", username='" + username + '\'' +
+                    '}';
+        }
+
+        @Override
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
@@ -66,9 +70,5 @@ import java.util.Objects;
             return compareById;
         }
         return this.type.compareTo(tick.getType());
-    }
-
-    public String fileToString() {
-        return name + "," + coordinates.fileToString() + "," + creationDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss")) + "," + price + "," + type + "," + venue.fileToString();
     }
 }
