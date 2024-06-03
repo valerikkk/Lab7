@@ -41,6 +41,7 @@ public class ScriptExecuter {
                 try {
                     consoleManager.setTokens(result[i].split(" "));
                     System.out.println(Arrays.toString(consoleManager.getTokens()));
+                    System.out.println();
                     try {
                         if(result[i].equalsIgnoreCase("add")){
                             String[] addData = new String[8];
