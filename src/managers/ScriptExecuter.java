@@ -2,6 +2,7 @@ package managers;
 
 import exceptions.NoSuchCommandException;
 import exceptions.NullValueException;
+import exceptions.ScriptRecursionException;
 
 
 import java.io.FileInputStream;
@@ -36,7 +37,6 @@ public class ScriptExecuter {
             System.arraycopy(arr, 0, arr2, 0, arr2.length);
             String res = String.valueOf(arr2);
             result = res.split("\r\n");
-            System.out.println(Arrays.toString(result));
             for (int i=0; i<result.length; i++) {
                 try {
                     consoleManager.setTokens(result[i].split(" "));
@@ -73,10 +73,12 @@ public class ScriptExecuter {
                         System.out.println("Требуется больше параметров в команду add");
                     }
                     if (consoleManager.getTokens().length > 1 && consoleManager.tokens[1].equals(path)) {
-                        System.out.println("lolippop");
+                        throw new ScriptRecursionException();
                     }
                 } catch (NullPointerException e) {
                     throw new NoSuchCommandException();
+                }catch (ScriptRecursionException e){
+                    System.out.println("Скрипт не должен вызывать рекурсию");
                 }
             }
 

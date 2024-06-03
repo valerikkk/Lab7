@@ -152,7 +152,7 @@ public class Authorization {
             ResultSet set = statement.executeQuery();
             if(set.next()){
                 String passwordToCheck = set.getString("PASSWORD");
-                String hashPassword = hash.encryptThisString(password) ;
+                String hashPassword = hash.encryptThisString(password);
                 return passwordToCheck.equals(hashPassword);
             }
         } catch (SQLException e) {

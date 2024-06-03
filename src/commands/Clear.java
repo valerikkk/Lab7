@@ -1,6 +1,7 @@
 package commands;
 
 import managers.AllManagers;
+import managers.DBParser;
 import managers.DBWriter;
 
 import java.util.Vector;
@@ -21,7 +22,9 @@ public class Clear extends Command {
     @Override
     public void run() {
         DBWriter dbWriter = AllManagers.createAllManagers().getDbWriter();
+        DBParser dbParser = new DBParser();
         dbWriter.clearDB();
         AllManagers.getManagers().getCollectionManager().setCollection(new Vector<>());
+        dbParser.read();
     }
 }

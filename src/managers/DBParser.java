@@ -24,6 +24,12 @@ public class DBParser {
                     }
                 }
             }
+            if(res!=null){
+                res.close();
+            }
+            if(statement!=null){
+                statement.close();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
