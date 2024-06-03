@@ -20,9 +20,8 @@ public class Clear extends Command {
      */
     @Override
     public void run() {
-        AllManagers.getManagers().getCollectionManager().setCollection(new Vector<>());
         DBWriter dbWriter = AllManagers.createAllManagers().getDbWriter();
         dbWriter.clearDB();
+        AllManagers.getManagers().getCollectionManager().setCollection(new Vector<>());
     }
-
 }

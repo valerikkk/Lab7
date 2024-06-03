@@ -109,7 +109,7 @@ public class Authorization {
                                 throw new NullValueException();
                             }else if(checkPassword(income,ps)){
                                 System.out.println("Пароль верен");
-                                setUsername(income);
+                                setUsername(income.toUpperCase());
                                 setPassword(ps);
                                 break;
                             }else {
