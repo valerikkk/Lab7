@@ -27,6 +27,7 @@ public class DataCollector{
         collectTicketType(ticketData);
         collectVenue(ticketData);
         System.out.println("success");
+        ticketData.setUsername(Authorization.username);
         return ticketData;
     }
 
